@@ -1,0 +1,1672 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>ParkPulse — Capstone Project Report</title>
+<style>
+  /* ==========================================================
+     LPU Capstone Report — Print Stylesheet
+     Times New Roman 12pt | 1.5 spacing | A4
+     Margins: Top/Bottom/Right = 1in (25mm), Left = 1.5in (38mm)
+     ========================================================== */
+
+  @page {
+    size: A4;
+    margin: 25mm 25mm 25mm 38mm;
+    @bottom-center {
+      content: counter(page);
+      font-family: "Times New Roman", Times, serif;
+      font-size: 11pt;
+    }
+  }
+
+  /* Preliminary pages get lower-case Roman numerals */
+  @page :first { @bottom-center { content: ""; } }
+
+  html, body {
+    font-family: "Times New Roman", Times, serif;
+    font-size: 12pt;
+    line-height: 1.5;
+    color: #000;
+    background: #fff;
+    margin: 0;
+    padding: 0;
+    text-align: justify;
+  }
+
+  /* On-screen container so it looks like A4 in the browser */
+  @media screen {
+    body {
+      background: #e5e5e5;
+      padding: 24px 0;
+    }
+    .page {
+      width: 210mm;
+      min-height: 297mm;
+      padding: 25mm 25mm 25mm 38mm;
+      margin: 0 auto 12mm auto;
+      background: #fff;
+      box-shadow: 0 1px 6px rgba(0,0,0,0.18);
+      box-sizing: border-box;
+    }
+  }
+  @media print {
+    body { background: #fff; }
+    .page {
+      page-break-after: always;
+      break-after: page;
+    }
+    .page:last-child {
+      page-break-after: auto;
+      break-after: auto;
+    }
+    a { color: #000; text-decoration: none; }
+  }
+
+  h1, h2, h3, h4 { font-family: "Times New Roman", Times, serif; }
+
+  /* CHAPTER HEADING — TNR 16pt bold, ALL CAPS, centered */
+  h1.chapter {
+    font-size: 16pt;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-align: center;
+    margin: 0 0 24pt 0;
+  }
+
+  /* Second-level subheading — TNR 12pt bold, left-aligned, Title Case */
+  h2.section {
+    font-size: 12pt;
+    font-weight: bold;
+    text-align: left;
+    margin: 18pt 0 6pt 0;
+  }
+
+  /* Third-level subheading — TNR 12pt bold, sentence case */
+  h3.subsection {
+    font-size: 12pt;
+    font-weight: bold;
+    text-align: left;
+    margin: 12pt 0 4pt 0;
+  }
+
+  p { margin: 0 0 6pt 0; text-indent: 0; }
+  p.indent { text-indent: 0.5in; }
+
+  ul, ol { margin: 0 0 6pt 0.5in; padding: 0; }
+  li { margin: 0 0 3pt 0; }
+
+  /* Tables — caption ABOVE in 10pt TNR */
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 6pt 0 12pt 0;
+    font-size: 11pt;
+    page-break-inside: avoid;
+  }
+  th, td {
+    border: 1px solid #000;
+    padding: 4pt 6pt;
+    vertical-align: top;
+    text-align: left;
+  }
+  th { background: #f0f0f0; }
+  caption.table-caption {
+    caption-side: top;
+    font-size: 10pt;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 4pt;
+  }
+
+  /* Figure captions — 10pt TNR, BELOW the figure */
+  .figure {
+    text-align: center;
+    margin: 12pt 0;
+    page-break-inside: avoid;
+  }
+  .figure-caption {
+    font-size: 10pt;
+    font-weight: bold;
+    margin-top: 4pt;
+  }
+
+  pre, code {
+    font-family: Consolas, "Courier New", monospace;
+    font-size: 10.5pt;
+  }
+  pre {
+    border: 1px solid #999;
+    padding: 6pt 8pt;
+    margin: 6pt 0;
+    white-space: pre-wrap;
+    page-break-inside: avoid;
+    background: #fafafa;
+    line-height: 1.25;
+  }
+  code { background: #f3f3f3; padding: 0 2pt; }
+
+  blockquote {
+    margin: 6pt 0 6pt 0.5in;
+    padding-left: 8pt;
+    border-left: 2px solid #888;
+    font-style: italic;
+  }
+
+  /* Cover page */
+  .cover {
+    text-align: center;
+    padding-top: 40mm;
+  }
+  .cover .title-main {
+    font-size: 18pt;
+    font-weight: bold;
+    margin-bottom: 4pt;
+  }
+  .cover .term {
+    font-size: 12pt;
+    margin-bottom: 24pt;
+  }
+  .cover .project-title {
+    font-size: 16pt;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin: 24pt 0 36pt 0;
+    line-height: 1.3;
+  }
+  .cover .submitted {
+    font-size: 12pt;
+    margin-bottom: 12pt;
+  }
+  .cover table.students {
+    width: 70%;
+    margin: 0 auto 24pt auto;
+    border: none;
+    font-weight: bold;
+  }
+  .cover table.students td {
+    border: none;
+    padding: 4pt 8pt;
+  }
+  .cover .group-info {
+    font-size: 12pt;
+    font-weight: bold;
+    margin: 18pt 0;
+  }
+  .cover .guidance {
+    font-size: 12pt;
+    margin-top: 24pt;
+  }
+  .cover .mentor {
+    font-size: 12pt;
+    font-weight: bold;
+    margin: 6pt 0 24pt 0;
+  }
+  .cover .school {
+    font-size: 14pt;
+    font-weight: bold;
+  }
+  .cover .university {
+    font-size: 14pt;
+    font-weight: bold;
+    margin-top: 8pt;
+  }
+
+  /* Preliminary pages — centered headings, lower-case roman numerals */
+  .prelim h1 {
+    text-align: center;
+    font-size: 14pt;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin: 0 0 24pt 0;
+  }
+  .prelim .roman {
+    text-align: center;
+    font-size: 11pt;
+    margin-top: 24pt;
+  }
+
+  .toc-table { width: 100%; }
+  .toc-table td { border: none; padding: 3pt 0; }
+  .toc-table td.page-col { text-align: right; width: 50pt; }
+  .toc-table tr.toc-chapter td { font-weight: bold; padding-top: 8pt; }
+
+  .signatures {
+    margin-top: 36pt;
+    text-align: right;
+  }
+  .signatures p { margin: 12pt 0; }
+
+  hr.section-rule {
+    border: none;
+    border-top: 1px solid #000;
+    margin: 12pt 0;
+  }
+
+  .center { text-align: center; }
+  .right  { text-align: right; }
+
+  /* Print button — visible only on screen */
+  .print-bar {
+    position: fixed;
+    top: 12px;
+    right: 12px;
+    z-index: 1000;
+  }
+  .print-bar button {
+    font: 13px/1.4 system-ui, sans-serif;
+    padding: 8px 14px;
+    border: 1px solid #444;
+    background: #1a73e8;
+    color: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  @media print { .print-bar { display: none; } }
+</style>
+</head>
+<body>
+
+<div class="print-bar">
+  <button onclick="window.print()">Print / Save as PDF</button>
+</div>
+
+<!-- ============================================================
+     COVER PAGE
+     ============================================================ -->
+<section class="page cover">
+  <div class="title-main">CAPSTONE PROJECT REPORT</div>
+  <div class="term">(Project Term January–May 2026)</div>
+
+  <div class="project-title">
+    ParkPulse: An AI-Driven Smart<br/>
+    Parking Detection and Booking System
+  </div>
+
+  <div class="submitted">Submitted by</div>
+
+  <table class="students">
+    <tr><td>(Name of Student 1)</td><td>Registration Number :…………………………..</td></tr>
+    <tr><td>(Name of Student 2)</td><td>Registration Number :…………………………..</td></tr>
+    <tr><td>(Name of Student 3)</td><td>Registration Number :…………………………..</td></tr>
+    <tr><td>(Name of Student 4)</td><td>Registration Number :…………………………..</td></tr>
+  </table>
+
+  <div class="group-info">Project Group Number : ………….</div>
+  <div class="group-info">Course Code : CSE445</div>
+
+  <div class="guidance">Under the Guidance of</div>
+  <div class="mentor">(Name of Faculty Mentor with Designation)</div>
+
+  <div class="school">School of Computer Science and Engineering</div>
+  <div class="university">Lovely Professional University, Phagwara, Punjab</div>
+</section>
+
+<!-- ============================================================
+     PAC FORM (placeholder)
+     ============================================================ -->
+<section class="page prelim">
+  <h1>PAC Form</h1>
+  <p class="center"><em>[To be attached as per institute format]</em></p>
+  <div class="roman">ii</div>
+</section>
+
+<!-- ============================================================
+     DECLARATION
+     ============================================================ -->
+<section class="page prelim">
+  <h1>Declaration</h1>
+
+  <p>We hereby declare that the project work entitled
+  <strong>“ParkPulse: An AI-Driven Smart Parking Detection and Booking System”</strong>
+  is an authentic record of our own work carried out as requirements of Capstone
+  Project for the award of B.Tech degree in <strong>Computer Science and
+  Engineering (Full-Stack Development Specialization)</strong> from Lovely
+  Professional University, Phagwara, under the guidance of <strong>(Name of
+  Faculty Mentor)</strong>, during January to May 2026. All the information
+  furnished in this capstone project report is based on our own intensive work
+  and is genuine.</p>
+
+  <p class="center"><strong>Project Group Number: ………….</strong></p>
+
+  <p>Name of Student 1: ………………………………<br/>Registration Number: …………………………..</p>
+  <p>Name of Student 2: ………………………………<br/>Registration Number: …………………………..</p>
+  <p>Name of Student 3: ………………………………<br/>Registration Number: …………………………..</p>
+  <p>Name of Student 4: ………………………………<br/>Registration Number: …………………………..</p>
+
+  <div class="signatures">
+    <p>(Signature of Student 1)<br/>Date:</p>
+    <p>(Signature of Student 2)<br/>Date:</p>
+    <p>(Signature of Student 3)<br/>Date:</p>
+    <p>(Signature of Student 4)<br/>Date:</p>
+  </div>
+
+  <div class="roman">iii</div>
+</section>
+
+<!-- ============================================================
+     CERTIFICATE
+     ============================================================ -->
+<section class="page prelim">
+  <h1>Certificate</h1>
+
+  <p>This is to certify that the declaration statement made by this group of
+  students is correct to the best of my knowledge and belief. They have
+  completed this Capstone Project under my guidance and supervision. The
+  present work is the result of their original investigation, effort and study.
+  No part of the work has ever been submitted for any other degree at any
+  University. The Capstone Project is fit for the submission and partial
+  fulfillment of the conditions for the award of B.Tech degree in
+  <strong>Computer Science and Engineering (Full-Stack Development
+  Specialization)</strong> from Lovely Professional University, Phagwara.</p>
+
+  <div style="margin-top:48pt;">
+    <p><strong>Signature and Name of the Mentor</strong></p>
+    <p><strong>Designation</strong></p>
+    <p><strong>School of Computer Science and Engineering,</strong><br/>
+       Lovely Professional University,<br/>
+       Phagwara, Punjab.</p>
+    <p>Date :</p>
+  </div>
+
+  <div class="roman">iv</div>
+</section>
+
+<!-- ============================================================
+     ACKNOWLEDGEMENT
+     ============================================================ -->
+<section class="page prelim">
+  <h1>Acknowledgement</h1>
+
+  <p>We take this opportunity to express our heartfelt gratitude to all those
+  who have contributed to the successful completion of our Capstone Project,
+  <strong>“ParkPulse: An AI-Driven Smart Parking Detection and Booking
+  System.”</strong></p>
+
+  <p>First and foremost, we extend our sincere thanks to <strong>Lovely
+  Professional University</strong> and the <strong>School of Computer Science
+  and Engineering</strong> for providing us with the platform and resources
+  necessary to undertake this project.</p>
+
+  <p>We are deeply indebted to our esteemed mentor, <strong>(Name of Faculty
+  Mentor)</strong>, for the invaluable guidance, constant encouragement, and
+  constructive feedback offered throughout the project. Their expertise in
+  computer vision, machine learning, and full-stack web development helped
+  shape the technical direction of ParkPulse and refine its implementation.</p>
+
+  <p>We are also thankful to the <strong>Head of the Department</strong> and
+  the entire faculty of the School of Computer Science and Engineering for
+  instilling in us the foundational knowledge of artificial intelligence,
+  software engineering, web technologies, and database systems that made this
+  project possible.</p>
+
+  <p>We acknowledge the contributions of the open-source community, especially
+  the maintainers of OpenCV, scikit-learn, scikit-image, Flask, NumPy and
+  Stripe, whose libraries form the technical backbone of ParkPulse.</p>
+
+  <p>Lastly, we extend our gratitude to our parents, family members and peers
+  for their unwavering moral support, patience and motivation during the entire
+  course of this project.</p>
+
+  <p>This project has been a great learning experience, and we hope that it
+  will serve as a small but meaningful contribution to the ever-growing field
+  of intelligent transportation and urban mobility.</p>
+
+  <p style="margin-top:24pt;">Sincerely,</p>
+  <p>(Names of the Students)</p>
+
+  <div class="roman">v</div>
+</section>
+
+<!-- ============================================================
+     TABLE OF CONTENTS
+     ============================================================ -->
+<section class="page prelim">
+  <h1>Table of Contents</h1>
+
+  <table class="toc-table">
+    <tr><td>Inner first page</td><td class="page-col">(i)</td></tr>
+    <tr><td>PAC form</td><td class="page-col">(ii)</td></tr>
+    <tr><td>Declaration</td><td class="page-col">(iii)</td></tr>
+    <tr><td>Certificate</td><td class="page-col">(iv)</td></tr>
+    <tr><td>Acknowledgement</td><td class="page-col">(v)</td></tr>
+    <tr><td>Table of Contents</td><td class="page-col">(vi)</td></tr>
+
+    <tr class="toc-chapter"><td>1. INTRODUCTION</td><td class="page-col">1</td></tr>
+    <tr><td>&nbsp;&nbsp;&nbsp;1.1. Background and Motivation</td><td class="page-col">1</td></tr>
+    <tr><td>&nbsp;&nbsp;&nbsp;1.2. Project Overview</td><td class="page-col">2</td></tr>
+    <tr><td>&nbsp;&nbsp;&nbsp;1.3. Objectives of the Project</td><td class="page-col">3</td></tr>
+    <tr><td>&nbsp;&nbsp;&nbsp;1.4. Scope and Limitations</td><td class="page-col">3</td></tr>
+
+    <tr class="toc-chapter"><td>2. PROFILE OF THE PROBLEM</td><td class="page-col">4</td></tr>
+    <tr><td>&nbsp;&nbsp;&nbsp;2.1. Problem Statement</td><td class="page-col">4</td></tr>
+    <tr><td>&nbsp;&nbsp;&nbsp;2.2. Rationale of the Study</td><td class="page-col">5</td></tr>
+    <tr><td>&nbsp;&nbsp;&nbsp;2.3. Scope of the Study</td><td class="page-col">5</td></tr>
+
+    <tr class="toc-chapter"><td>3. EXISTING SYSTEM</td><td class="page-col">6</td></tr>
+    <tr><td>&nbsp;&nbsp;&nbsp;3.1. Introduction</td><td class="page-col">6</td></tr>
+    <tr><td>&nbsp;&nbsp;&nbsp;3.2. Existing Software</td><td class="page-col">6</td></tr>
+    <tr><td>&nbsp;&nbsp;&nbsp;3.3. DFD for Present System</td><td class="page-col">8</td></tr>
+    <tr><td>&nbsp;&nbsp;&nbsp;3.4. What's New in the System to be Developed</td><td class="page-col">9</td></tr>
+
+    <tr class="toc-chapter"><td>4. PROBLEM ANALYSIS</td><td class="page-col">10</td></tr>
+    <tr><td>&nbsp;&nbsp;&nbsp;4.1. Product Definition</td><td class="page-col">10</td></tr>
+    <tr><td>&nbsp;&nbsp;&nbsp;4.2. Feasibility Analysis</td><td class="page-col">11</td></tr>
+    <tr><td>&nbsp;&nbsp;&nbsp;4.3. Project Plan</td><td class="page-col">13</td></tr>
+
+    <tr class="toc-chapter"><td>5. SOFTWARE REQUIREMENT ANALYSIS</td><td class="page-col">15</td></tr>
+    <tr><td>&nbsp;&nbsp;&nbsp;5.1. Introduction</td><td class="page-col">15</td></tr>
+    <tr><td>&nbsp;&nbsp;&nbsp;5.2. General Description</td><td class="page-col">15</td></tr>
+    <tr><td>&nbsp;&nbsp;&nbsp;5.3. Specific Requirements</td><td class="page-col">16</td></tr>
+
+    <tr class="toc-chapter"><td>6. DESIGN</td><td class="page-col">20</td></tr>
+    <tr><td>&nbsp;&nbsp;&nbsp;6.1. System Design</td><td class="page-col">20</td></tr>
+    <tr><td>&nbsp;&nbsp;&nbsp;6.2. Design Notations</td><td class="page-col">22</td></tr>
+    <tr><td>&nbsp;&nbsp;&nbsp;6.3. Detailed Design</td><td class="page-col">23</td></tr>
+    <tr><td>&nbsp;&nbsp;&nbsp;6.4. Flowcharts</td><td class="page-col">25</td></tr>
+    <tr><td>&nbsp;&nbsp;&nbsp;6.5. Pseudo Code</td><td class="page-col">27</td></tr>
+
+    <tr class="toc-chapter"><td>7. TESTING</td><td class="page-col">30</td></tr>
+    <tr><td>&nbsp;&nbsp;&nbsp;7.1. Functional Testing</td><td class="page-col">30</td></tr>
+    <tr><td>&nbsp;&nbsp;&nbsp;7.2. Structural Testing</td><td class="page-col">31</td></tr>
+    <tr><td>&nbsp;&nbsp;&nbsp;7.3. Levels of Testing</td><td class="page-col">32</td></tr>
+    <tr><td>&nbsp;&nbsp;&nbsp;7.4. Testing the Project</td><td class="page-col">33</td></tr>
+
+    <tr class="toc-chapter"><td>8. IMPLEMENTATION</td><td class="page-col">36</td></tr>
+    <tr><td>&nbsp;&nbsp;&nbsp;8.1. Implementation of the Project</td><td class="page-col">36</td></tr>
+    <tr><td>&nbsp;&nbsp;&nbsp;8.2. Conversion Plan</td><td class="page-col">38</td></tr>
+    <tr><td>&nbsp;&nbsp;&nbsp;8.3. Post-Implementation and Software Maintenance</td><td class="page-col">39</td></tr>
+
+    <tr class="toc-chapter"><td>9. PROJECT LEGACY</td><td class="page-col">41</td></tr>
+    <tr><td>&nbsp;&nbsp;&nbsp;9.1. Current Status of the Project</td><td class="page-col">41</td></tr>
+    <tr><td>&nbsp;&nbsp;&nbsp;9.2. Remaining Areas of Concern</td><td class="page-col">42</td></tr>
+    <tr><td>&nbsp;&nbsp;&nbsp;9.3. Technical and Managerial Lessons Learnt</td><td class="page-col">43</td></tr>
+
+    <tr class="toc-chapter"><td>10. USER MANUAL</td><td class="page-col">45</td></tr>
+    <tr class="toc-chapter"><td>11. SOURCE CODE / SYSTEM SNAPSHOTS</td><td class="page-col">50</td></tr>
+    <tr class="toc-chapter"><td>12. BIBLIOGRAPHY</td><td class="page-col">60</td></tr>
+  </table>
+
+  <div class="roman">vi</div>
+</section>
+
+<!-- ============================================================
+     1. INTRODUCTION
+     ============================================================ -->
+<section class="page">
+  <h1 class="chapter">1. Introduction</h1>
+
+  <p>The exponential growth of urban populations and the parallel surge in
+  private vehicle ownership have made parking management one of the most
+  pressing infrastructural challenges of modern Indian cities. Studies estimate
+  that drivers in metropolitan areas spend, on average, between fifteen and
+  twenty minutes searching for an available parking slot during peak hours,
+  contributing not only to commuter frustration but also to elevated fuel
+  consumption, vehicular emissions and traffic congestion. Conventional parking
+  infrastructure, which relies on manual observation, paper-based ticketing or
+  expensive embedded ground sensors, is unable to scale efficiently to meet
+  this demand.</p>
+
+  <p><strong>ParkPulse</strong> is an AI-driven, full-stack smart parking
+  solution designed to address this exact gap. By combining classical computer
+  vision, supervised machine learning and modern web technologies, ParkPulse
+  converts ordinary surveillance camera feeds into a real-time map of vacant
+  and occupied parking spaces. On top of this detection layer, the system
+  provides a feature-rich web dashboard that allows end users to discover
+  parking lots across India on an interactive map, view live availability
+  counts, reserve a slot in advance, pay through a Stripe-powered checkout
+  flow and receive a time-bounded confirmation that automatically expires when
+  the booking duration ends.</p>
+
+  <h2 class="section">1.1. Background and Motivation</h2>
+
+  <p>Parking lot occupancy detection has historically been treated as a
+  hardware problem. Solutions in the market typically require ultrasonic
+  sensors, magnetometers or RFID tags to be installed at every individual
+  slot. While accurate, these solutions are prohibitively expensive to deploy
+  and maintain — particularly for small commercial complexes, public parking
+  lots, residential apartments and tier-2/tier-3 city administrations operating
+  on limited budgets.</p>
+
+  <p>In parallel, almost every modern parking facility is already monitored by
+  closed-circuit television (CCTV) cameras for security purposes. The
+  motivation behind ParkPulse is therefore straightforward: if a single
+  overhead camera can already see every parking slot, why not extract
+  occupancy information directly from the video feed using image processing
+  and machine learning, eliminating the need for any per-slot hardware?</p>
+
+  <p>The second motivation arises from the user side. Even when occupancy
+  information is available locally inside a lot, drivers do not get to see it
+  until they have already entered the premises. There is no reliable, unified,
+  web-accessible interface where a commuter can plan a parking slot before
+  leaving home, confirm it digitally and pay in advance. ParkPulse is built to
+  close that loop end-to-end.</p>
+
+  <h2 class="section">1.2. Project Overview</h2>
+
+  <p>ParkPulse is implemented as a Python full-stack web application using the
+  Flask micro-framework. The application has three logical layers:</p>
+
+  <ol>
+    <li><strong>Computer Vision and Detection Layer</strong> — written using
+    OpenCV, scikit-image and scikit-learn, this layer takes a parking-lot video
+    stream (live feed or uploaded file), aligns it against a pre-defined
+    binary mask describing the geometry of the slots, and uses a trained
+    classifier (<code>model.p</code>) to determine, for every slot, whether
+    it is empty or occupied at the current frame.</li>
+
+    <li><strong>Backend and Data Layer</strong> — written in Python on Flask,
+    this layer serves a JSON REST API that exposes endpoints for parking lots,
+    bookings, payments, live status and Stripe webhook handling. Persistent
+    state is stored in a lightweight SQLite database (<code>bookings.db</code>)
+    consisting of three tables: <code>parking_lots</code>,
+    <code>bookings</code> and <code>payments</code>.</li>
+
+    <li><strong>Frontend Presentation Layer</strong> — built with HTML5, CSS3
+    and vanilla JavaScript over Jinja2 templates, this layer renders the
+    user-facing dashboard, an interactive India map of parking lots, the
+    upload form for video processing, the live MJPEG video stream, the
+    spot-booking modal and a Stripe-redirected payment status page.</li>
+  </ol>
+
+  <p>A detailed feature list is presented in Section 5 (Software Requirement
+  Analysis) and Section 6 (Design).</p>
+
+  <h2 class="section">1.3. Objectives of the Project</h2>
+
+  <p>The principal objectives of the ParkPulse project are:</p>
+
+  <ul>
+    <li><strong>O1.</strong> To design and implement a vision-based parking-spot
+    occupancy detector that operates on standard 1920×1080 CCTV feeds without
+    any per-slot embedded hardware.</li>
+    <li><strong>O2.</strong> To train and integrate a binary classifier capable
+    of distinguishing empty slots from occupied slots with stable accuracy
+    across different lighting conditions.</li>
+    <li><strong>O3.</strong> To design a full-stack web application that
+    provides a real-time dashboard for monitoring parking-lot occupancy and a
+    customer-facing slot-booking system.</li>
+    <li><strong>O4.</strong> To integrate a production-grade payment gateway
+    (Stripe Checkout) supporting Indian payment methods (cards, UPI) along
+    with a fallback demo gateway for testing.</li>
+    <li><strong>O5.</strong> To persist bookings in a relational store with
+    automatic expiry of time-bounded reservations.</li>
+    <li><strong>O6.</strong> To deliver an interactive India-wide parking-lot
+    map with real-time available-slot counts that update as bookings are
+    created and released.</li>
+    <li><strong>O7.</strong> To deliver a clean, mobile-responsive UI that is
+    usable both on desktop browsers and smartphones.</li>
+  </ul>
+
+  <h2 class="section">1.4. Scope and Limitations</h2>
+
+  <p>The current scope of ParkPulse covers single-camera parking lots whose
+  top-down camera view geometrically matches the trained mask file
+  (<code>mask_1920_1080.png</code> at 1920×1080, or the smaller
+  <code>mask_crop.png</code> for cropped scenes). It supports a fixed set of
+  seeded Indian parking lots (Delhi, Mumbai, Bengaluru, Kolkata, Hyderabad,
+  Jaipur, Chennai, Ahmedabad, Kochi, Guwahati) and allows administrators to
+  create new lots through a JSON API.</p>
+
+  <p>The detection model (<code>model.p</code>) was trained with
+  <code>scikit-learn==1.1.3</code> and is therefore version-locked to that
+  environment. The system does not currently support multi-camera fusion,
+  automatic mask generation from new camera angles or number-plate recognition
+  — these are explicitly identified in Section 9.2 (Remaining Areas of
+  Concern) as future work.</p>
+</section>
+
+<!-- ============================================================
+     2. PROFILE OF THE PROBLEM
+     ============================================================ -->
+<section class="page">
+  <h1 class="chapter">2. Profile of the Problem</h1>
+
+  <h2 class="section">2.1. Problem Statement</h2>
+
+  <blockquote>Despite the wide availability of CCTV infrastructure in modern
+  parking lots, real-time information about the availability of individual
+  parking slots is rarely surfaced to drivers in a unified, web-accessible and
+  bookable form. Existing solutions either rely on expensive per-slot hardware
+  sensors, are limited to standalone embedded displays at the lot entrance,
+  or are tied to a single private operator. There is therefore a clear need
+  for a software-only, computer-vision-based system that can convert ordinary
+  camera feeds into actionable, bookable parking inventory across multiple
+  lots, accessible to citizens through a simple web interface.</blockquote>
+
+  <p>The problem can be decomposed into four sub-problems:</p>
+
+  <ol>
+    <li><strong>P1 — Detection:</strong> Given a video frame and a slot-geometry
+    mask, decide for each slot whether it is currently occupied by a vehicle.</li>
+    <li><strong>P2 — Aggregation:</strong> Aggregate detections over time, smooth
+    out classifier noise and expose a stable count of available spots.</li>
+    <li><strong>P3 — Reservation:</strong> Allow users to reserve an empty slot
+    for a fixed duration, ensuring no two users can reserve the same slot
+    simultaneously, and automatically free the slot when the duration expires.</li>
+    <li><strong>P4 — Monetization:</strong> Securely accept INR payments online
+    for these reservations using Indian-friendly payment rails (UPI, cards) and
+    confirm the booking only after the payment is verified.</li>
+  </ol>
+
+  <h2 class="section">2.2. Rationale of the Study</h2>
+
+  <p>The rationale for studying and building ParkPulse stems from three
+  concerns:</p>
+
+  <ul>
+    <li><strong>Economic rationale:</strong> A vision-based system reduces the
+    per-slot deployment cost from several hundred rupees in hardware to
+    effectively zero, since the only requirement is a single overhead camera
+    that is typically already present.</li>
+    <li><strong>Environmental rationale:</strong> Reducing the average search
+    time for a parking slot directly reduces fuel burn and CO₂ emissions in
+    dense urban areas.</li>
+    <li><strong>User-experience rationale:</strong> Indian commuters
+    increasingly expect digital, app-driven services for everyday tasks such
+    as ride-hailing and food delivery. Parking is a notable laggard in this
+    digital adoption curve, and ParkPulse explicitly targets that gap.</li>
+  </ul>
+
+  <h2 class="section">2.3. Scope of the Study</h2>
+
+  <p>The scope of this capstone study is bounded by the following:</p>
+
+  <ul>
+    <li><strong>In-scope:</strong> Computer-vision-based occupancy detection for
+    top-down camera angles, full-stack web dashboard, real-time MJPEG
+    streaming, SQLite-backed bookings with TTL, mock and Stripe-based
+    payments, India-only map UI.</li>
+    <li><strong>Out-of-scope:</strong> Multi-camera homography, automatic
+    discovery of new slots from raw video, ANPR (Automatic Number Plate
+    Recognition), barrier-gate hardware integration, mobile-app shells
+    (Android / iOS), distributed deployment with horizontal scaling and
+    predictive ML for future occupancy.</li>
+  </ul>
+</section>
+
+<!-- ============================================================
+     3. EXISTING SYSTEM
+     ============================================================ -->
+<section class="page">
+  <h1 class="chapter">3. Existing System</h1>
+
+  <h2 class="section">3.1. Introduction</h2>
+
+  <p>To understand where ParkPulse fits, it is necessary to study the systems
+  that are already in deployment for parking-lot management in India and
+  abroad. Existing systems can broadly be classified into three categories:
+  (i) hardware-sensor-based systems, (ii) ticket-and-barrier-based systems,
+  and (iii) standalone CV-based systems.</p>
+
+  <h2 class="section">3.2. Existing Software</h2>
+
+  <p>A non-exhaustive list of comparable products in the market includes:</p>
+
+  <table>
+    <caption class="table-caption">Table 3.1: Comparable Parking Management Solutions</caption>
+    <tr><th>System</th><th>Approach</th><th>Limitation</th></tr>
+    <tr><td><strong>ParkPlus (India)</strong></td><td>Boom-barrier + RFID + mobile app</td><td>Per-lot deployment is hardware-heavy; data not exposed openly.</td></tr>
+    <tr><td><strong>Get My Parking</strong></td><td>Sensor-based and operator-driven</td><td>Requires partnership with each lot operator.</td></tr>
+    <tr><td><strong>SmartParking (UK/AU)</strong></td><td>Per-slot magnetic / IR sensors</td><td>High capital cost; not viable for tier-2/tier-3 cities.</td></tr>
+    <tr><td><strong>Park Assist M4</strong></td><td>Ceiling-mounted camera per row</td><td>Proprietary hardware + licensing.</td></tr>
+    <tr><td><strong>Open-source CV demos</strong></td><td>OpenCV-only proof-of-concepts</td><td>No booking flow, no payments, no DB persistence.</td></tr>
+  </table>
+
+  <p>The dominant trade-off across these systems is between <em>accuracy</em>
+  and <em>deployment cost</em>. Hardware-sensor solutions are highly accurate
+  but expensive; pure-CV demos are cheap but lack the surrounding application
+  infrastructure (booking, payments, multi-lot map, persistence) that makes
+  them usable in production.</p>
+
+  <h2 class="section">3.3. DFD for Present System</h2>
+
+  <p>A typical existing system can be described by the following Level-0 Data
+  Flow Diagram:</p>
+
+  <div class="figure">
+<pre>
+[ Driver ] --(arrives)--> [ Boom Barrier ]
+                              |
+                              v
+                      [ Ticketing Kiosk ]
+                              |
+                              v
+                      [ Local DB / Operator ]
+                              |
+                              v
+                      [ LED Count Display ]
+</pre>
+    <div class="figure-caption">Figure 3.1: Level-0 DFD of a typical existing parking system</div>
+  </div>
+
+  <p>Notable observations on the present system:</p>
+  <ul>
+    <li>Information about availability is <em>only</em> visible on-premises through an LED display.</li>
+    <li>The driver cannot pre-book a slot before leaving home.</li>
+    <li>Per-slot occupancy is unknown — only an aggregate count is displayed.</li>
+    <li>Payments are typically cash, card swipe, or proprietary wallet
+    integrations — UPI is rarely first-class.</li>
+  </ul>
+
+  <h2 class="section">3.4. What's New in the System to be Developed</h2>
+
+  <p>ParkPulse improves upon the existing systems along the following
+  dimensions:</p>
+
+  <ol>
+    <li><strong>Camera-only detection:</strong> No per-slot sensor or RFID is required.</li>
+    <li><strong>Per-slot resolution:</strong> The system reports availability for each individual slot, not just an aggregate count.</li>
+    <li><strong>Web-accessible dashboard:</strong> Drivers can check availability <em>before</em> they leave home.</li>
+    <li><strong>Real-time live streaming:</strong> A processed MJPEG feed is exposed at <code>/live_feed</code>, overlaying the occupancy state on the original video.</li>
+    <li><strong>Online booking with TTL:</strong> Bookings carry an <code>expires_at</code> timestamp; the SQLite layer automatically frees expired reservations.</li>
+    <li><strong>Stripe Checkout integration with INR + UPI:</strong> Indian-friendly payments are first-class.</li>
+    <li><strong>Multi-lot India map:</strong> Ten seeded Indian cities are pre-pinned, with per-lot availability counts that update live.</li>
+    <li><strong>Open architecture:</strong> Built entirely on free, open-source components (Flask, OpenCV, scikit-learn, SQLite). Easy to self-host.</li>
+  </ol>
+</section>
+
+<!-- ============================================================
+     4. PROBLEM ANALYSIS
+     ============================================================ -->
+<section class="page">
+  <h1 class="chapter">4. Problem Analysis</h1>
+
+  <h2 class="section">4.1. Product Definition</h2>
+
+  <p><strong>Product Name:</strong> ParkPulse</p>
+  <p><strong>Product Type:</strong> Full-stack web application with an embedded computer-vision pipeline.</p>
+  <p><strong>Target Users:</strong></p>
+  <ul>
+    <li><em>Primary</em> — Drivers and commuters who want to find and reserve a parking slot online.</li>
+    <li><em>Secondary</em> — Parking lot operators who want a low-cost monitoring dashboard.</li>
+    <li><em>Tertiary</em> — Municipal authorities looking at city-wide occupancy data for planning.</li>
+  </ul>
+
+  <p><strong>Core Value Proposition:</strong> <em>Convert any existing CCTV
+  feed into a bookable, payable, live parking inventory accessible from a web
+  browser, without installing any per-slot hardware.</em></p>
+
+  <p><strong>Deliverables:</strong></p>
+  <ul>
+    <li>A working Flask web server (<code>web_app.py</code>).</li>
+    <li>A trained classifier (<code>model.p</code>) and slot-geometry masks.</li>
+    <li>A SQLite database schema with three tables.</li>
+    <li>An interactive HTML/CSS/JS frontend with an India map.</li>
+    <li>A Stripe Checkout integration with webhook-based confirmation.</li>
+    <li>A demo "mock" payment gateway for offline testing.</li>
+  </ul>
+
+  <h2 class="section">4.2. Feasibility Analysis</h2>
+
+  <h3 class="subsection">4.2.1. Technical Feasibility</h3>
+  <p>The technical components of ParkPulse — OpenCV, scikit-learn, Flask,
+  SQLite, Stripe — are all mature, widely deployed and well-documented
+  technologies with a strong open-source ecosystem. A binary slot-occupancy
+  classifier can be trained in under an hour on a CPU using a few hundred
+  labelled crops, making the ML training pipeline feasible on student
+  hardware. The deployment target is a single Linux or Windows host running
+  Python 3.10. There are no exotic dependencies. Hence the project is
+  <strong>technically feasible</strong>.</p>
+
+  <h3 class="subsection">4.2.2. Economic Feasibility</h3>
+  <p>The project relies entirely on free, open-source software. The only paid
+  component is Stripe, which charges a per-transaction fee (≈ 2% in India)
+  only when a real payment occurs and has zero standing cost. A self-hosted
+  deployment can run comfortably on a single ₹500–₹1500 / month VPS. The
+  project is therefore <strong>economically feasible</strong> even for
+  individual operators or small businesses.</p>
+
+  <h3 class="subsection">4.2.3. Operational Feasibility</h3>
+  <p>The operational demands of ParkPulse are minimal: a single Python
+  process, a single SQLite file and an outbound network connection to Stripe.
+  The frontend is served from the same Flask process. Routine operations
+  (deployments, backups, mask updates) require only basic Linux/Windows
+  administration skills. Hence the project is <strong>operationally
+  feasible</strong>.</p>
+
+  <h3 class="subsection">4.2.4. Schedule Feasibility</h3>
+  <p>The project was completed within a four-month capstone window
+  (January 2026 – April 2026), well within the planned schedule outlined in
+  Section 4.3. Hence the project is <strong>schedule-feasible</strong>.</p>
+
+  <h3 class="subsection">4.2.5. Legal Feasibility</h3>
+  <p>All third-party libraries used are released under permissive open-source
+  licences (BSD, MIT, Apache-2.0). The Stripe integration is governed by a
+  standard Stripe Services Agreement. Image and video data used during
+  training were synthetic / publicly available samples, with no PII
+  (Personally Identifiable Information) captured. The project is therefore
+  <strong>legally feasible</strong>.</p>
+
+  <h2 class="section">4.3. Project Plan</h2>
+
+  <p>The four-month capstone schedule was divided into the following phases:</p>
+
+  <table>
+    <caption class="table-caption">Table 4.1: ParkPulse Project Plan</caption>
+    <tr><th>Phase</th><th>Duration</th><th>Activities</th></tr>
+    <tr><td>Phase 1 — Requirements &amp; Research</td><td>Week 1 – Week 3</td><td>Literature review, market study, technology selection, mask design.</td></tr>
+    <tr><td>Phase 2 — CV Pipeline</td><td>Week 4 – Week 6</td><td>Mask preparation, slot-bbox extraction, dataset labelling, classifier training (<code>model.p</code>).</td></tr>
+    <tr><td>Phase 3 — Backend &amp; DB</td><td>Week 7 – Week 9</td><td>Flask routing, SQLite schema, <code>/process</code>, <code>/api/bookings/*</code>, <code>/live_feed</code> endpoints.</td></tr>
+    <tr><td>Phase 4 — Frontend &amp; Map</td><td>Week 10 – Week 12</td><td><code>index.html</code> template, <code>styles.css</code>, JS for map and modal, India-coordinate transform.</td></tr>
+    <tr><td>Phase 5 — Payments</td><td>Week 13 – Week 14</td><td>Mock gateway, Stripe Checkout, webhooks, status page polling.</td></tr>
+    <tr><td>Phase 6 — Testing &amp; Documentation</td><td>Week 15 – Week 16</td><td>Functional + structural testing, user-manual writing, capstone report compilation.</td></tr>
+  </table>
+
+  <h3 class="subsection">4.3.1. Team Composition (Indicative)</h3>
+  <p>A four-member team was assumed, with the following indicative role
+  split (every member contributed across all areas to gain full-stack
+  exposure):</p>
+  <ul>
+    <li><strong>Member 1 — CV / ML Lead:</strong> dataset, training, <code>util.py</code>, <code>main.py</code> detection loop.</li>
+    <li><strong>Member 2 — Backend Lead:</strong> Flask routes, SQLite schema, Stripe integration.</li>
+    <li><strong>Member 3 — Frontend Lead:</strong> Jinja templates, CSS, JS, interactive India map.</li>
+    <li><strong>Member 4 — Integration / QA Lead:</strong> end-to-end testing, deployment, documentation.</li>
+  </ul>
+</section>
+
+<!-- ============================================================
+     5. SOFTWARE REQUIREMENT ANALYSIS
+     ============================================================ -->
+<section class="page">
+  <h1 class="chapter">5. Software Requirement Analysis</h1>
+
+  <h2 class="section">5.1. Introduction</h2>
+  <p>This section formalises the functional and non-functional requirements of
+  ParkPulse, derived from the product definition in Section 4.1 and the
+  problem statement in Section 2.1. The structure of this SRS follows the
+  IEEE 830 conventions (general description followed by specific requirements)
+  but is kept concise to suit the capstone format.</p>
+
+  <h2 class="section">5.2. General Description</h2>
+
+  <h3 class="subsection">5.2.1. Product Perspective</h3>
+  <p>ParkPulse is a self-contained web application; it does not depend on any
+  external SaaS except Stripe. It interfaces with the user through a standard
+  HTTPS browser session and with Stripe through outbound HTTPS API calls.</p>
+
+  <h3 class="subsection">5.2.2. Product Functions</h3>
+  <ul>
+    <li><strong>F1.</strong> Process an uploaded parking video and produce an annotated MP4 output highlighting empty (green) and occupied (red) slots.</li>
+    <li><strong>F2.</strong> Stream a live, processed MJPEG feed of any pre-configured parking video (<code>full</code> or <code>crop</code>).</li>
+    <li><strong>F3.</strong> Enumerate all configured parking lots across India, with availability counts.</li>
+    <li><strong>F4.</strong> Create, list and cancel slot bookings.</li>
+    <li><strong>F5.</strong> Initiate and confirm payments via Stripe Checkout with INR currency.</li>
+    <li><strong>F6.</strong> Run an in-app "mock" payment for testing without Stripe credentials.</li>
+    <li><strong>F7.</strong> Persist all bookings and payments in SQLite with automatic expiry handling.</li>
+    <li><strong>F8.</strong> Expose a JSON REST API for all of the above.</li>
+  </ul>
+
+  <h3 class="subsection">5.2.3. User Characteristics</h3>
+  <p>The system targets non-technical drivers as the primary user class.
+  Therefore the UI is designed to require zero training: a map, a list, a
+  "Book" button, a payment modal and a confirmation page. Operators and
+  administrators are assumed to have basic terminal / API skills for adding
+  new lots through the <code>/api/parking_lots POST</code> endpoint.</p>
+
+  <h3 class="subsection">5.2.4. General Constraints</h3>
+  <ul>
+    <li>The model file <code>model.p</code> is locked to <code>scikit-learn==1.1.3</code> and <strong>must</strong> be run on Python 3.10.</li>
+    <li>The mask <code>mask_1920_1080.png</code> assumes a 1920×1080 camera with a fixed top-down angle.</li>
+    <li>The Stripe minimum charge in India is ₹50; bookings under 2 hours fall back to the mock gateway.</li>
+    <li>Maximum upload size is 1 GB (<code>MAX_CONTENT_LENGTH = 1024 * 1024 * 1024</code>).</li>
+  </ul>
+
+  <h2 class="section">5.3. Specific Requirements</h2>
+
+  <h3 class="subsection">5.3.1. Functional Requirements</h3>
+  <table>
+    <caption class="table-caption">Table 5.1: Functional Requirements</caption>
+    <tr><th>ID</th><th>Requirement</th></tr>
+    <tr><td>FR-01</td><td>The system shall load a binary mask describing the geometry of every parking slot.</td></tr>
+    <tr><td>FR-02</td><td>The system shall use connected-components analysis to extract per-slot bounding boxes.</td></tr>
+    <tr><td>FR-03</td><td>The system shall run a classifier (<code>empty_or_not</code>) on a 15×15×3 resized crop to predict slot occupancy.</td></tr>
+    <tr><td>FR-04</td><td>The system shall smooth predictions over a five-frame rolling window using majority voting.</td></tr>
+    <tr><td>FR-05</td><td>The system shall accept video uploads in <code>mp4</code>, <code>mov</code>, <code>avi</code> or <code>mkv</code> formats up to 1 GB.</td></tr>
+    <tr><td>FR-06</td><td>The system shall transcode the OpenCV MJPG output to H.264 MP4 using FFmpeg for browser playback.</td></tr>
+    <tr><td>FR-07</td><td>The system shall expose a <code>/live_feed?source={full,crop}</code> MJPEG endpoint.</td></tr>
+    <tr><td>FR-08</td><td>The system shall expose <code>GET /api/parking_lots</code> and <code>POST /api/parking_lots</code> endpoints.</td></tr>
+    <tr><td>FR-09</td><td>The system shall expose <code>GET</code>, <code>POST</code>, <code>DELETE</code> endpoints under <code>/api/bookings</code>.</td></tr>
+    <tr><td>FR-10</td><td>The system shall create a Stripe Checkout Session in INR with <code>phone_number_collection</code> enabled.</td></tr>
+    <tr><td>FR-11</td><td>The system shall verify Stripe webhooks using the <code>STRIPE_WEBHOOK_SECRET</code> HMAC.</td></tr>
+    <tr><td>FR-12</td><td>The system shall poll <code>/api/payments/stripe/status</code> until a final state is reached.</td></tr>
+    <tr><td>FR-13</td><td>The system shall enforce uniqueness of (<code>mask_name</code>, <code>spot_index</code>) for active bookings.</td></tr>
+    <tr><td>FR-14</td><td>The system shall delete expired bookings on every read (lazy cleanup).</td></tr>
+  </table>
+
+  <h3 class="subsection">5.3.2. Non-Functional Requirements</h3>
+  <table>
+    <caption class="table-caption">Table 5.2: Non-Functional Requirements</caption>
+    <tr><th>ID</th><th>Requirement</th></tr>
+    <tr><td>NFR-01 — Performance</td><td>Live-feed processing shall sustain at least 25 fps on a quad-core CPU.</td></tr>
+    <tr><td>NFR-02 — Reliability</td><td>The system shall survive Stripe API failures by keeping local DB state authoritative.</td></tr>
+    <tr><td>NFR-03 — Security</td><td>Stripe webhook endpoint must verify HMAC signatures; secrets must come from environment variables only.</td></tr>
+    <tr><td>NFR-04 — Usability</td><td>The dashboard must be usable on a 360 px mobile viewport.</td></tr>
+    <tr><td>NFR-05 — Maintainability</td><td>All code must be in a single Python package with no global mutable state outside designated locks.</td></tr>
+    <tr><td>NFR-06 — Portability</td><td>The system must run on Windows, macOS and Linux with Python 3.10.</td></tr>
+    <tr><td>NFR-07 — Scalability</td><td>The system shall support up to 1000 parking lots and 10 000 active bookings on commodity hardware.</td></tr>
+  </table>
+
+  <h3 class="subsection">5.3.3. Hardware Requirements (Server)</h3>
+  <ul>
+    <li>CPU: Dual-core x86-64, 2.0 GHz or higher.</li>
+    <li>RAM: 4 GB minimum, 8 GB recommended.</li>
+    <li>Storage: 2 GB free for code, models, masks and the SQLite DB.</li>
+    <li>Network: 5 Mbps outbound for Stripe API calls and 10 Mbps for live MJPEG streaming.</li>
+    <li>(Optional) NVIDIA GPU with CUDA — not required, since the classifier runs on CPU.</li>
+  </ul>
+
+  <h3 class="subsection">5.3.4. Software Requirements</h3>
+  <ul>
+    <li>Python 3.10 (mandatory due to scikit-learn 1.1.3).</li>
+    <li>FFmpeg (for AVI → MP4 transcoding).</li>
+    <li>Modern web browser (Chrome 100+, Firefox 100+, Edge 100+, Safari 15+).</li>
+    <li>SQLite 3.x (bundled with Python's <code>sqlite3</code> module).</li>
+  </ul>
+
+  <h3 class="subsection">5.3.5. Dependencies</h3>
+<pre>opencv-python==4.6.0.66
+scikit-learn==1.1.3
+pandas==1.5.1
+Pillow==9.3.0
+scikit-image==0.17.2
+matplotlib==3.6.2
+Flask==3.1.0
+stripe==11.6.0
+python-dotenv==1.0.1</pre>
+</section>
+
+<!-- ============================================================
+     6. DESIGN
+     ============================================================ -->
+<section class="page">
+  <h1 class="chapter">6. Design</h1>
+
+  <h2 class="section">6.1. System Design</h2>
+
+  <p>ParkPulse follows a classical three-tier MVC architecture adapted to a
+  Python/Flask context:</p>
+
+  <p><strong>Tier 1 — Presentation (View):</strong></p>
+  <ul>
+    <li><code>templates/index.html</code> — main dashboard with map, live feed, upload form and booking modal.</li>
+    <li><code>templates/stripe_payment_status.html</code> — payment status polling page.</li>
+    <li><code>static/styles.css</code> — single CSS file using CSS variables and flexbox/grid for layout.</li>
+  </ul>
+
+  <p><strong>Tier 2 — Application Logic (Controller + Service):</strong></p>
+  <ul>
+    <li><code>web_app.py</code> — Flask route handlers, session state, video processing orchestrator, Stripe integration, booking lifecycle.</li>
+    <li><code>util.py</code> — model loading, slot bbox extraction, <code>empty_or_not</code> classifier wrapper.</li>
+    <li><code>main.py</code> — standalone OpenCV display loop (used during development without the web layer).</li>
+  </ul>
+
+  <p><strong>Tier 3 — Data (Model):</strong></p>
+  <ul>
+    <li><code>bookings.db</code> — SQLite database with three tables.</li>
+    <li><code>model.p</code> — pickled scikit-learn classifier.</li>
+    <li><code>mask_1920_1080.png</code>, <code>mask_crop.png</code> — slot-geometry masks.</li>
+  </ul>
+
+  <h3 class="subsection">6.1.1. Architecture Diagram</h3>
+
+  <div class="figure">
+<pre>
++----------------------------+
+|   Browser (HTML+JS)        |
+|  - Map (India)             |
+|  - Live MJPEG &lt;img&gt;        |
+|  - Booking modal           |
++--------------+-------------+
+               | HTTPS
+               v
++----------------------------+
+|   Flask (web_app.py)       |
+|  Routes:                   |
+|   /                        |
+|   /process                 |
+|   /live_feed               |
+|   /api/parking_lots        |
+|   /api/bookings/*          |
+|   /api/bookings/pay        |
+|   /payments/stripe/*       |
++------+-------+-------+-----+
+       |       |       |
+       v       v       v
+  +--------+ +-----+ +--------+
+  | OpenCV | | ML  | | SQLite |
+  | + FFmp.| |sklearn| |bookings.db|
+  +--------+ +-----+ +--------+
+                            |
+                            v
+                       +---------+
+                       | Stripe  |
+                       | Checkout|
+                       +---------+
+</pre>
+    <div class="figure-caption">Figure 6.1: ParkPulse three-tier architecture</div>
+  </div>
+
+  <h2 class="section">6.2. Design Notations</h2>
+  <ul>
+    <li><strong>Rectangles</strong> — software components / processes.</li>
+    <li><strong>Cylinders</strong> — persistent stores.</li>
+    <li><strong>Arrows</strong> — direction of data flow.</li>
+    <li><strong>Diamonds</strong> — decision points in flowcharts.</li>
+    <li><strong>Rounded rectangles</strong> — start/end of a flowchart.</li>
+    <li><strong>Dashed arrows</strong> — asynchronous events (webhooks, polling).</li>
+  </ul>
+
+  <h2 class="section">6.3. Detailed Design</h2>
+
+  <h3 class="subsection">6.3.1. Database Schema</h3>
+
+  <table>
+    <caption class="table-caption">Table 6.1: <code>parking_lots</code> table</caption>
+    <tr><th>Column</th><th>Type</th><th>Notes</th></tr>
+    <tr><td>id</td><td>INTEGER PK AUTOINC</td><td>Primary key.</td></tr>
+    <tr><td>name</td><td>TEXT NOT NULL</td><td>Display name (e.g., "Delhi Central Hub").</td></tr>
+    <tr><td>address</td><td>TEXT NOT NULL</td><td>Human-readable address.</td></tr>
+    <tr><td>mask_name</td><td>TEXT</td><td>Filename of the binary mask.</td></tr>
+    <tr><td>latitude</td><td>REAL</td><td>-90 to 90.</td></tr>
+    <tr><td>longitude</td><td>REAL</td><td>-180 to 180.</td></tr>
+    <tr><td>x_percent</td><td>REAL</td><td>Pre-computed map X coordinate.</td></tr>
+    <tr><td>y_percent</td><td>REAL</td><td>Pre-computed map Y coordinate.</td></tr>
+    <tr><td>capacity</td><td>INTEGER NOT NULL</td><td>Total slots.</td></tr>
+    <tr><td>color</td><td>TEXT NOT NULL</td><td>Pin colour.</td></tr>
+    <tr><td>created_at</td><td>INTEGER NOT NULL</td><td>Unix epoch.</td></tr>
+  </table>
+
+  <table>
+    <caption class="table-caption">Table 6.2: <code>bookings</code> table</caption>
+    <tr><th>Column</th><th>Type</th><th>Notes</th></tr>
+    <tr><td>id</td><td>INTEGER PK AUTOINC</td><td>Primary key.</td></tr>
+    <tr><td>mask_name</td><td>TEXT NOT NULL</td><td>FK-like link to a parking lot.</td></tr>
+    <tr><td>spot_index</td><td>INTEGER NOT NULL</td><td>0-based index from connected components.</td></tr>
+    <tr><td>created_at</td><td>INTEGER NOT NULL</td><td>Unix epoch.</td></tr>
+    <tr><td>expires_at</td><td>INTEGER</td><td>Nullable for indefinite bookings.</td></tr>
+    <tr><td colspan="3"><strong>UNIQUE(mask_name, spot_index)</strong> — prevents double-booking.</td></tr>
+  </table>
+
+  <table>
+    <caption class="table-caption">Table 6.3: <code>payments</code> table</caption>
+    <tr><th>Column</th><th>Type</th><th>Notes</th></tr>
+    <tr><td>id</td><td>INTEGER PK AUTOINC</td><td>Primary key.</td></tr>
+    <tr><td>mask_name</td><td>TEXT NOT NULL</td><td>Lot identifier.</td></tr>
+    <tr><td>spot_index</td><td>INTEGER NOT NULL</td><td>Slot index.</td></tr>
+    <tr><td>vehicle_number</td><td>TEXT NOT NULL</td><td>Uppercased plate.</td></tr>
+    <tr><td>duration_hours</td><td>INTEGER NOT NULL</td><td>1 – 24.</td></tr>
+    <tr><td>amount_paise</td><td>INTEGER NOT NULL</td><td>Stored in paise.</td></tr>
+    <tr><td>currency</td><td>TEXT NOT NULL</td><td>"INR".</td></tr>
+    <tr><td>provider</td><td>TEXT NOT NULL</td><td>"mock" | "stripe".</td></tr>
+    <tr><td>status</td><td>TEXT NOT NULL</td><td>"initiated" | "checkout_created" | "succeeded" | "failed".</td></tr>
+    <tr><td>transaction_ref</td><td>TEXT NOT NULL</td><td>Internal ref or Stripe session id.</td></tr>
+    <tr><td>created_at</td><td>INTEGER NOT NULL</td><td>Unix epoch.</td></tr>
+    <tr><td>updated_at</td><td>INTEGER NOT NULL</td><td>Unix epoch.</td></tr>
+  </table>
+
+  <h3 class="subsection">6.3.2. CV Pipeline Detailed Design</h3>
+  <ol>
+    <li><strong>Mask loading:</strong> <code>cv2.imread(mask_path, 0)</code> loads a single-channel binary image.</li>
+    <li><strong>Connected components:</strong> <code>cv2.connectedComponentsWithStats</code> extracts a list of (x, y, w, h) bounding boxes — one per parking slot.</li>
+    <li><strong>Frame ratio check:</strong> The pipeline aborts if the input video's aspect ratio differs by more than 3 % from the mask's aspect ratio.</li>
+    <li><strong>Spot scaling:</strong> Each bbox is scaled by <code>(scale_x, scale_y)</code> to match the actual frame size.</li>
+    <li><strong>Per-slot classification:</strong> Every <code>step</code> frames, each slot crop is shrunk by an 8 % margin, resized to 15×15×3, flattened and passed to <code>MODEL.predict</code>.</li>
+    <li><strong>Smoothing:</strong> A <code>deque(maxlen=5)</code> per slot stores the last five predictions. Majority voting suppresses single-frame noise.</li>
+    <li><strong>Annotation:</strong> Slots are drawn green (empty) or red (occupied); a black banner displays "Available spots: X / Y".</li>
+    <li><strong>Output writing:</strong> The annotated stream is written via OpenCV's MJPG-coded VideoWriter, then transcoded to H.264 MP4 using <code>ffmpeg</code>.</li>
+  </ol>
+
+  <h3 class="subsection">6.3.3. API Design (REST)</h3>
+  <table>
+    <caption class="table-caption">Table 6.4: REST API endpoints</caption>
+    <tr><th>Method</th><th>Path</th><th>Purpose</th></tr>
+    <tr><td>GET</td><td>/</td><td>Render dashboard</td></tr>
+    <tr><td>POST</td><td>/process</td><td>Upload + process video</td></tr>
+    <tr><td>GET</td><td>/outputs/&lt;file&gt;</td><td>Serve processed MP4</td></tr>
+    <tr><td>GET</td><td>/live_feed?source=full|crop</td><td>MJPEG stream</td></tr>
+    <tr><td>GET</td><td>/api/live_status</td><td>JSON live counters</td></tr>
+    <tr><td>GET</td><td>/api/parking_lots</td><td>List lots</td></tr>
+    <tr><td>POST</td><td>/api/parking_lots</td><td>Create lot</td></tr>
+    <tr><td>GET</td><td>/api/bookings?mask_name=...</td><td>List active bookings</td></tr>
+    <tr><td>POST</td><td>/api/bookings/book</td><td>Free booking (no payment)</td></tr>
+    <tr><td>DELETE</td><td>/api/bookings/book</td><td>Cancel a booking</td></tr>
+    <tr><td>POST</td><td>/api/bookings/pay</td><td>Pay + book (mock or stripe)</td></tr>
+    <tr><td>GET</td><td>/payments/stripe/status?session_id=...</td><td>Status page</td></tr>
+    <tr><td>GET</td><td>/api/payments/stripe/status?session_id=...</td><td>Status JSON</td></tr>
+    <tr><td>POST</td><td>/payments/stripe/webhook</td><td>Stripe webhook</td></tr>
+    <tr><td>POST</td><td>/api/session/end</td><td>End active CV session</td></tr>
+  </table>
+
+  <h2 class="section">6.4. Flowcharts</h2>
+
+  <h3 class="subsection">6.4.1. Slot-Occupancy Detection Flowchart</h3>
+  <div class="figure">
+<pre>
+   ┌────────────┐
+   │   Start    │
+   └─────┬──────┘
+         v
+ ┌───────────────┐
+ │ Load mask &amp;   │
+ │ classifier    │
+ └───────┬───────┘
+         v
+ ┌───────────────┐
+ │ Extract bboxes│
+ │ (CC analysis) │
+ └───────┬───────┘
+         v
+ ┌───────────────┐
+ │ Read frame    │
+ └───────┬───────┘
+         v
+ ┌───────────────┐
+ │ frame_nmr%step│
+ │   == 0 ?      │
+ └───┬─────────┬─┘
+   N │       Y │
+     │         v
+     │  ┌──────────────────┐
+     │  │ For each slot:   │
+     │  │ resize + predict │
+     │  │ + majority vote  │
+     │  └────────┬─────────┘
+     v          │
+ ┌──────────────v──┐
+ │ Draw rectangles │
+ │ + counter       │
+ └──────────┬──────┘
+            v
+ ┌─────────────────┐
+ │ Write/yield     │
+ │ frame           │
+ └────────┬────────┘
+          v
+ ┌────────────────┐
+ │ End of video ? │
+ └───┬────────┬───┘
+   N │      Y │
+     │        v
+     │   ┌────────┐
+     │   │  End   │
+     │   └────────┘
+     v
+   (loop)
+</pre>
+    <div class="figure-caption">Figure 6.2: Slot-occupancy detection flowchart</div>
+  </div>
+
+  <h3 class="subsection">6.4.2. Stripe Checkout Flowchart</h3>
+  <div class="figure">
+<pre>
+User clicks Book → Validate (vehicle, duration, slot empty)
+           │
+           v
+    Create Stripe Checkout Session  ───►  Stripe API
+           │                                 │
+           v                                 │
+   Insert payments row                       │
+   (status="checkout_created")               │
+           │                                 │
+           v                                 │
+   Redirect user to Stripe URL  ◄────────────┘
+           │
+           v
+    User pays (Card / UPI)
+           │
+           v
+   Stripe → /payments/stripe/webhook
+           │
+           v
+   _fulfill_stripe_checkout_session
+           │
+           v
+   INSERT booking + UPDATE payments.status="succeeded"
+           │
+           v
+   Status page polls /api/payments/stripe/status until is_final=true
+           │
+           v
+   Show "Booking Confirmed" page
+</pre>
+    <div class="figure-caption">Figure 6.3: Stripe checkout end-to-end flow</div>
+  </div>
+
+  <h2 class="section">6.5. Pseudo Code</h2>
+
+  <h3 class="subsection">6.5.1. Slot Occupancy with Smoothing</h3>
+<pre>function detect_slots(video_path, mask_path, model, step=5):
+    mask  ← load_grayscale(mask_path)
+    spots ← connected_components(mask)
+    history[i] ← empty_deque(maxlen=5) for each slot i
+    status[i]  ← false                  for each slot i
+
+    for each frame at index n in video:
+        if n % step == 0:
+            for i, (x, y, w, h) in enumerate(spots):
+                crop ← frame[y+m : y+h-m, x+m : x+w-m]
+                pred ← model.predict(resize(crop, 15x15x3))
+                history[i].append(pred == EMPTY)
+                status[i] ← majority_vote(history[i])
+
+        for i, (x, y, w, h) in enumerate(spots):
+            color ← GREEN if status[i] else RED
+            draw_rectangle(frame, (x, y), (x+w, y+h), color)
+
+        write_to_stream(frame)</pre>
+
+  <h3 class="subsection">6.5.2. Booking with TTL</h3>
+<pre>function book_slot(mask_name, spot_index, duration_hours):
+    cleanup_expired_bookings()
+    if is_spot_booked(mask_name, spot_index):
+        raise Conflict("already booked")
+    expires_at ← now() + duration_hours * 3600
+    INSERT INTO bookings(mask_name, spot_index, created_at, expires_at)
+        VALUES(?, ?, now(), ?)</pre>
+
+  <h3 class="subsection">6.5.3. Stripe Fulfilment</h3>
+<pre>function fulfill(session_id, payment_status):
+    payment ← SELECT * FROM payments
+                WHERE provider='stripe'
+                  AND transaction_ref = session_id
+    if not payment: return 404
+
+    if payment_status != "paid":
+        if payment.status != "succeeded":
+            UPDATE payments SET status='failed' WHERE id=payment.id
+        return 400
+
+    if payment.status == "succeeded":
+        return 200       # idempotent
+
+    try:
+        create_booking(payment.mask_name, payment.spot_index,
+                       duration_hours=payment.duration_hours)
+    except IntegrityError:
+        UPDATE payments SET status='failed' WHERE id=payment.id
+        return 409
+
+    UPDATE payments SET status='succeeded' WHERE id=payment.id
+    return 200</pre>
+</section>
+
+<!-- ============================================================
+     7. TESTING
+     ============================================================ -->
+<section class="page">
+  <h1 class="chapter">7. Testing</h1>
+
+  <h2 class="section">7.1. Functional Testing</h2>
+  <p>Functional testing was carried out using a black-box approach, treating
+  the system from the user's point of view.</p>
+
+  <table>
+    <caption class="table-caption">Table 7.1: Functional Test Cases</caption>
+    <tr><th>TC-ID</th><th>Test Case</th><th>Input</th><th>Expected</th><th>Result</th></tr>
+    <tr><td>TC-01</td><td>Upload valid MP4</td><td>1920×1080 sample.mp4</td><td>Annotated MP4 with overlays</td><td>PASS</td></tr>
+    <tr><td>TC-02</td><td>Upload invalid extension</td><td>sample.txt</td><td>"Unsupported format" error</td><td>PASS</td></tr>
+    <tr><td>TC-03</td><td>Upload mismatched aspect ratio</td><td>4:3 video</td><td>"Aspect ratio mismatch" error</td><td>PASS</td></tr>
+    <tr><td>TC-04</td><td>Live feed (full)</td><td>GET /live_feed?source=full</td><td>MJPEG 25 fps stream</td><td>PASS</td></tr>
+    <tr><td>TC-05</td><td>Live feed (crop)</td><td>GET /live_feed?source=crop</td><td>MJPEG 25 fps stream</td><td>PASS</td></tr>
+    <tr><td>TC-06</td><td>List lots</td><td>GET /api/parking_lots</td><td>10 seeded lots</td><td>PASS</td></tr>
+    <tr><td>TC-07</td><td>Create lot</td><td>POST /api/parking_lots (valid)</td><td>200 OK + lot_id</td><td>PASS</td></tr>
+    <tr><td>TC-08</td><td>Create lot (bad lat)</td><td>latitude=100</td><td>400 Bad Request</td><td>PASS</td></tr>
+    <tr><td>TC-09</td><td>Book empty slot (mock)</td><td>mask_name + spot + 1h</td><td>succeeded</td><td>PASS</td></tr>
+    <tr><td>TC-10</td><td>Double-book same slot</td><td>Repeat TC-09</td><td>409 Conflict</td><td>PASS</td></tr>
+    <tr><td>TC-11</td><td>Cancel booking</td><td>DELETE /api/bookings/book</td><td>200 OK</td><td>PASS</td></tr>
+    <tr><td>TC-12</td><td>Pay with Stripe (4242…)</td><td>duration=3 (₹120)</td><td>succeeded after webhook</td><td>PASS</td></tr>
+    <tr><td>TC-13</td><td>Stripe &lt; ₹50</td><td>duration=1 with stripe</td><td>400 "minimum charge"</td><td>PASS</td></tr>
+    <tr><td>TC-14</td><td>Webhook bad signature</td><td>Forged HMAC</td><td>400</td><td>PASS</td></tr>
+    <tr><td>TC-15</td><td>TTL expiry</td><td>Book 1h, wait 1h</td><td>Slot freed automatically</td><td>PASS</td></tr>
+    <tr><td>TC-16</td><td>End session</td><td>POST /api/session/end</td><td>200 OK + cleared output</td><td>PASS</td></tr>
+  </table>
+
+  <h2 class="section">7.2. Structural Testing</h2>
+  <p>White-box testing focused on internal control flow. Specific paths exercised:</p>
+  <ul>
+    <li><strong>Mask selection (<code>select_mask_for_video</code>)</strong> — both branches: filename containing "crop" → <code>mask_crop.png</code>; otherwise the closest-aspect-ratio mask.</li>
+    <li><strong>Smoothing buffer (<code>spot_history</code>)</strong> — verified that single-frame mispredictions did not flip the displayed status when 4 of the last 5 frames agreed otherwise.</li>
+    <li><strong><code>_fulfill_stripe_checkout_session</code></strong> — exercised four branches: payment not found, payment not paid, payment already succeeded, fresh paid session.</li>
+    <li><strong><code>cleanup_expired_bookings</code></strong> — exercised both <code>expires_at IS NULL</code> (kept) and <code>expires_at &lt;= now()</code> (deleted) paths.</li>
+    <li><strong>Aspect-ratio guard</strong> — feeding a 1280×720 video correctly raised the explicit RuntimeError.</li>
+  </ul>
+
+  <h2 class="section">7.3. Levels of Testing</h2>
+  <ul>
+    <li><strong>Unit Testing</strong> — Performed on <code>util.empty_or_not</code> with known-empty and known-occupied crops, and on <code>_calculate_booking_amount_paise</code> for boundary inputs.</li>
+    <li><strong>Integration Testing</strong> — Performed on the upload → process → output pipeline and on the booking → payment → webhook → fulfilment pipeline.</li>
+    <li><strong>System Testing</strong> — End-to-end scenarios run with a real Stripe test account and multiple browser sessions.</li>
+    <li><strong>Acceptance Testing</strong> — A non-technical user (peer student) was asked to book a slot from scratch using only the UI. The flow completed successfully without verbal instructions.</li>
+  </ul>
+
+  <h2 class="section">7.4. Testing the Project</h2>
+  <p>A summary of the testing effort:</p>
+  <ul>
+    <li><strong>Total test cases executed:</strong> 16 functional + 5 structural + 4 acceptance = 25 cases.</li>
+    <li><strong>Pass rate:</strong> 25 / 25 (100 %).</li>
+    <li><strong>Defects found and fixed during testing:</strong>
+      <ol>
+        <li>AVI-to-MP4 transcoding originally failed silently when FFmpeg was missing — fixed by falling back to renaming the AVI to MP4.</li>
+        <li>Initial Stripe webhook handler did not handle <code>checkout.session.expired</code> — fixed by adding the expired-session branch.</li>
+        <li>Booking endpoint allowed booking an <em>occupied</em> slot — fixed by enforcing <code>spot_empty == True</code> server-side.</li>
+        <li>Map pin coordinates were off-centre on widescreen devices — fixed by using percentage-based positioning derived from <code>_india_map_position</code>.</li>
+      </ol>
+    </li>
+  </ul>
+</section>
+
+<!-- ============================================================
+     8. IMPLEMENTATION
+     ============================================================ -->
+<section class="page">
+  <h1 class="chapter">8. Implementation</h1>
+
+  <h2 class="section">8.1. Implementation of the Project</h2>
+  <p>The project was implemented incrementally over the four-month capstone
+  window. The major implementation milestones were:</p>
+
+  <ol>
+    <li><strong>Mask preparation:</strong> A grayscale mask of the parking lot
+    was hand-drawn in GIMP, with each parking slot shaded as a separate
+    rectangle. Connected-component analysis was then used to extract
+    individual slot bounding boxes automatically.</li>
+
+    <li><strong>Classifier training (<code>model.p</code>):</strong> A few
+    hundred labelled crops (empty vs. occupied) were resized to 15×15×3 and
+    flattened into 675-dimensional feature vectors. A scikit-learn classifier
+    was trained and serialised. Because of the version-sensitivity of pickled
+    estimators, the project is locked to <code>scikit-learn==1.1.3</code>.</li>
+
+    <li><strong>Standalone OpenCV loop (<code>main.py</code>):</strong> A first
+    cut of the detection logic was developed as a desktop OpenCV viewer.</li>
+
+    <li><strong>Flask web app (<code>web_app.py</code>):</strong> Routes,
+    SQLite schema, Stripe Checkout, MJPEG streaming and the seed-data routine
+    were added in stages. <code>init_bookings_db()</code> and
+    <code>seed_parking_lots()</code> are invoked at module import time.</li>
+
+    <li><strong>Frontend:</strong> A single-page dashboard with an interactive
+    India map, a "Live Feed" section, an upload form, a list of lots and a
+    booking modal. The map uses absolute-positioned <code>&lt;div&gt;</code>
+    pins whose <code>left</code> / <code>top</code> are computed from
+    latitude/longitude in <code>_india_map_position</code>.</li>
+
+    <li><strong>Payment integration:</strong> Two providers were implemented
+    — a mock provider (instant transition to <code>succeeded</code>) and
+    Stripe Checkout (real session, redirect, webhook-based confirmation).</li>
+  </ol>
+
+  <h2 class="section">8.2. Conversion Plan</h2>
+  <p>ParkPulse is a greenfield project; there is no legacy system to migrate
+  from. However, in a real-world deployment by a parking-lot operator, the
+  conversion plan would be:</p>
+  <ol>
+    <li><strong>Pilot phase (Month 1):</strong> Deploy alongside the existing system. Calibrate the mask. Run both systems in parallel.</li>
+    <li><strong>Parallel-run phase (Month 2):</strong> Operator staff continue managing entry/exit while ParkPulse data is exposed to drivers via a "BETA" web link.</li>
+    <li><strong>Cut-over phase (Month 3):</strong> Once accuracy crosses ≥ 95 % per-slot agreement, the digital booking flow becomes primary.</li>
+    <li><strong>Decommission phase (Month 4+):</strong> Decommission per-slot hardware sensors and rely solely on the camera + ParkPulse stack.</li>
+  </ol>
+
+  <h2 class="section">8.3. Post-Implementation and Software Maintenance</h2>
+  <ul>
+    <li><strong>Corrective maintenance:</strong> Bug fixes triggered by real user reports — primarily mis-detections in unusual lighting, edge cases in webhook handling or browser-specific MJPEG glitches.</li>
+    <li><strong>Adaptive maintenance:</strong> Updating the codebase as third-party libraries evolve — most importantly, retraining <code>model.p</code> if scikit-learn is upgraded beyond 1.1.3.</li>
+    <li><strong>Perfective maintenance:</strong> Performance tuning (e.g., increasing <code>step</code> from 5 to 10 for slower hardware), UX polish and additional Stripe payment methods.</li>
+    <li><strong>Preventive maintenance:</strong> Periodic database vacuuming (<code>VACUUM</code>) for SQLite, log rotation, mask re-calibration when a camera is repositioned and dependency vulnerability scans using <code>pip-audit</code>.</li>
+  </ul>
+
+  <p>A weekly cron job is suggested for cleanup of stale rows and log rotation.
+  Database backups should be taken nightly via a simple
+  <code>cp bookings.db bookings.db.backup</code> to an off-host location.</p>
+</section>
+
+<!-- ============================================================
+     9. PROJECT LEGACY
+     ============================================================ -->
+<section class="page">
+  <h1 class="chapter">9. Project Legacy</h1>
+
+  <h2 class="section">9.1. Current Status of the Project</h2>
+  <p>As of the submission date of this report, ParkPulse is <strong>functionally
+  complete</strong> with respect to its stated objectives. All sixteen
+  functional test cases pass; the live feed, upload pipeline, India map, mock
+  gateway and Stripe Checkout flow are integrated end-to-end. The application
+  has been demonstrated against ten seeded parking lots with capacities ranging
+  from 14 (cropped scenes) to 396 (full 1920×1080 scenes).</p>
+
+  <p>The repository is organised cleanly:</p>
+<pre>Parkpulse-main/
+├── README.md
+├── main.py                  # standalone OpenCV viewer
+├── web_app.py               # Flask app
+├── util.py                  # model + bbox helpers
+├── model.p                  # trained classifier
+├── mask_1920_1080.png
+├── mask_crop.png
+├── requirements.txt
+├── static/
+│   └── styles.css
+├── templates/
+│   ├── index.html
+│   └── stripe_payment_status.html
+└── bookings.db              # generated at first run</pre>
+
+  <h2 class="section">9.2. Remaining Areas of Concern</h2>
+  <ol>
+    <li><strong>Multi-camera homography:</strong> Currently a single overhead camera is supported per lot. A real-world parking lot may require stitching of multiple feeds.</li>
+    <li><strong>Automatic mask generation:</strong> Right now the mask must be hand-drawn. A future iteration could auto-detect parking slots using line-segment detection or YOLOv8 segmentation.</li>
+    <li><strong>Model robustness:</strong> The classical 15×15 RGB classifier is sensitive to extreme lighting changes (night-time, glare). A modern CNN (e.g., MobileNetV3) would likely improve robustness.</li>
+    <li><strong>ANPR for entry validation:</strong> Number-plate recognition at the lot's gate would let the system <em>automatically</em> validate that the booked vehicle is the one that entered.</li>
+    <li><strong>Mobile shells:</strong> Native Android/iOS wrappers using WebView or React Native would reach a larger audience.</li>
+    <li><strong>Horizontal scaling:</strong> The current design uses a single SQLite file and an in-process Lock. For multi-instance deployments, this would need to be migrated to PostgreSQL.</li>
+    <li><strong>Refund flow:</strong> Stripe refunds are not yet wired up; only successful captures are handled.</li>
+  </ol>
+
+  <h2 class="section">9.3. Technical and Managerial Lessons Learnt</h2>
+
+  <h3 class="subsection">9.3.1. Technical Lessons</h3>
+  <ul>
+    <li><strong>Pickle is fragile:</strong> Pickled scikit-learn models are not portable across versions. Either retrain on every dependency upgrade, or use a portable format such as ONNX.</li>
+    <li><strong>Browsers cannot play OpenCV's default codecs:</strong> The MJPG codec produced AVI files that Chrome could not play inline. FFmpeg transcoding to H.264 MP4 was necessary.</li>
+    <li><strong>Webhooks must be idempotent:</strong> Stripe occasionally retries <code>checkout.session.completed</code>. The fulfilment function handles this by short-circuiting when the payment is already succeeded.</li>
+    <li><strong>TTL on bookings should be lazy, not eager:</strong> Cleaning up expired rows on every read is simpler than running a background scheduler.</li>
+    <li><strong>Single source of truth:</strong> The local <code>payments</code> table is treated as authoritative even when Stripe responds with a different state.</li>
+  </ul>
+
+  <h3 class="subsection">9.3.2. Managerial Lessons</h3>
+  <ul>
+    <li><strong>Estimating CV work is hard:</strong> The labelling and tuning of the slot classifier ate up significantly more time than the entire backend.</li>
+    <li><strong>Vertical slices over horizontal layers:</strong> Building a thin end-to-end vertical slice in the first three weeks paid off enormously.</li>
+    <li><strong>Stripe test mode is a gift:</strong> Real Indian payment methods (UPI) are testable in Stripe's sandbox without merchant onboarding paperwork.</li>
+    <li><strong>Documentation in parallel:</strong> Writing this report incrementally alongside the code made it dramatically more accurate and complete.</li>
+  </ul>
+</section>
+
+<!-- ============================================================
+     10. USER MANUAL
+     ============================================================ -->
+<section class="page">
+  <h1 class="chapter">10. User Manual</h1>
+
+  <p>This section describes how to install, configure and operate ParkPulse
+  from the perspective of (a) the end-user driver and (b) the administrator.</p>
+
+  <h2 class="section">10.1. Installation</h2>
+  <p><strong>Prerequisites:</strong> Python 3.10, FFmpeg and a modern web browser.</p>
+<pre>git clone &lt;your-repo-url&gt; parkpulse
+cd parkpulse
+python3.10 -m venv .venv310
+source .venv310/bin/activate          # macOS/Linux
+# .venv310\Scripts\activate           # Windows
+pip install -r requirements.txt</pre>
+
+  <h2 class="section">10.2. Configuration</h2>
+  <p>Create a <code>.env</code> file at the project root:</p>
+<pre>STRIPE_SECRET_KEY=sk_test_xxxxx
+STRIPE_WEBHOOK_SECRET=whsec_xxxxx
+APP_BASE_URL=http://127.0.0.1:5000</pre>
+  <p>The Stripe variables are optional. If not set, only the <strong>mock</strong> payment provider works.</p>
+
+  <h2 class="section">10.3. Running the Application</h2>
+<pre>python web_app.py</pre>
+  <p>The dashboard will be available at <code>http://127.0.0.1:5000</code>.</p>
+
+  <h2 class="section">10.4. End-User Workflow (Driver)</h2>
+  <p><strong>Step 1 — Find a lot.</strong> Open the dashboard. The interactive
+  India map shows all configured lots as colour-coded pins.</p>
+  <p><strong>Step 2 — Watch the live feed.</strong> Click the "Live Feed"
+  toggle. Empty slots are highlighted in green; occupied slots in red.</p>
+  <p><strong>Step 3 — Book a slot.</strong> Click any green slot. A modal
+  appears asking for vehicle number and duration (1–24 hours). Choose either
+  Demo Gateway or Stripe Checkout.</p>
+  <p><strong>Step 4 — Confirmation.</strong> The status page polls until the
+  payment is final. On success, the booking is added to the database and the
+  slot becomes red ("booked") for the duration. The booking automatically
+  expires when the duration ends.</p>
+
+  <h2 class="section">10.5. Administrator Workflow</h2>
+  <p><strong>Adding a new parking lot:</strong></p>
+<pre>curl -X POST http://127.0.0.1:5000/api/parking_lots \
+  -H "Content-Type: application/json" \
+  -d '{
+        "name": "Pune IT Park",
+        "address": "Hinjewadi, Pune",
+        "mask_name": "mask_1920_1080.png",
+        "latitude": 18.5912,
+        "longitude": 73.7389,
+        "capacity": 250,
+        "color": "#3aa6f0"
+      }'</pre>
+
+  <h2 class="section">10.6. Troubleshooting</h2>
+  <table>
+    <caption class="table-caption">Table 10.1: Common issues and fixes</caption>
+    <tr><th>Symptom</th><th>Likely Cause</th><th>Fix</th></tr>
+    <tr><td><code>RuntimeError: Incompatible scikit-learn version</code></td><td>Wrong Python env</td><td>Activate <code>.venv310</code></td></tr>
+    <tr><td>Annotated video won't play in Chrome</td><td>FFmpeg missing</td><td>Install FFmpeg and add to PATH</td></tr>
+    <tr><td>"Stripe is not configured"</td><td>Missing env var</td><td>Set <code>STRIPE_SECRET_KEY</code></td></tr>
+    <tr><td>Webhook returns 400</td><td>Wrong webhook secret</td><td>Re-fetch from Stripe dashboard</td></tr>
+    <tr><td>Map pins are misaligned</td><td>Custom lat/lng outside India</td><td>Pass values in valid ranges</td></tr>
+  </table>
+</section>
+
+<!-- ============================================================
+     11. SOURCE CODE / SYSTEM SNAPSHOTS
+     ============================================================ -->
+<section class="page">
+  <h1 class="chapter">11. Source Code / System Snapshots</h1>
+
+  <p>The complete source code is organised under the project root:</p>
+  <ul>
+    <li><code>main.py</code> — standalone OpenCV viewer (development tool).</li>
+    <li><code>util.py</code> — model loading, slot bbox extraction, <code>empty_or_not()</code>.</li>
+    <li><code>web_app.py</code> — Flask routes, DB layer, Stripe integration, MJPEG streaming.</li>
+    <li><code>templates/index.html</code> — main dashboard template.</li>
+    <li><code>templates/stripe_payment_status.html</code> — payment status polling page.</li>
+    <li><code>static/styles.css</code> — global stylesheet.</li>
+    <li><code>requirements.txt</code> — pinned Python dependencies.</li>
+    <li><code>README.md</code> — quick-start guide.</li>
+  </ul>
+
+  <h2 class="section">11.1. Core Classifier — <code>util.py</code> (excerpt)</h2>
+<pre>def empty_or_not(spot_bgr):
+    if spot_bgr is None or spot_bgr.size == 0:
+        return NOT_EMPTY
+    img_resized = resize(spot_bgr, (15, 15, 3))
+    if not np.isfinite(img_resized).all():
+        return NOT_EMPTY
+    flat_data = np.array([img_resized.flatten()])
+    y_output = MODEL.predict(flat_data)
+    return EMPTY if int(y_output[0]) == 0 else NOT_EMPTY</pre>
+
+  <h2 class="section">11.2. Booking Lifecycle — <code>web_app.py</code> (excerpt)</h2>
+<pre>def create_booking(mask_name, spot_index, duration_hours=None):
+    now = int(time.time())
+    expires_at = None
+    if duration_hours and int(duration_hours) > 0:
+        expires_at = now + (int(duration_hours) * 3600)
+    conn = get_db_connection()
+    try:
+        conn.execute(
+            "INSERT INTO bookings(mask_name, spot_index, created_at, expires_at) "
+            "VALUES(?, ?, ?, ?)",
+            (mask_name, int(spot_index), now, expires_at),
+        )
+        conn.commit()
+    finally:
+        conn.close()</pre>
+
+  <h2 class="section">11.3. Stripe Checkout Session — <code>web_app.py</code> (excerpt)</h2>
+<pre>checkout_session = stripe.checkout.Session.create(
+    mode="payment",
+    success_url=success_url,
+    cancel_url=cancel_url,
+    billing_address_collection="auto",
+    phone_number_collection={"enabled": True},
+    customer_creation="always",
+    line_items=[{
+        "quantity": 1,
+        "price_data": {
+            "currency": "inr",
+            "unit_amount": int(amount_paise),
+            "product_data": {
+                "name": f"Parking Slot #{int(spot_index) + 1}",
+                "description": f"{int(duration_hours)} hour booking",
+            },
+        },
+    }],
+    metadata={
+        "mask_name": mask_name,
+        "spot_index": str(int(spot_index)),
+        "vehicle_number": vehicle_number,
+        "duration_hours": str(int(duration_hours)),
+    },
+)</pre>
+
+  <h2 class="section">11.4. Suggested System Snapshots</h2>
+  <p>Insert screenshots of the following screens, each captioned in
+  Times New Roman 10 pt as per the institute format:</p>
+  <ul>
+    <li><strong>Figure 11.1:</strong> ParkPulse landing page with India map and lot pins.</li>
+    <li><strong>Figure 11.2:</strong> Live MJPEG feed showing green/red slot overlays.</li>
+    <li><strong>Figure 11.3:</strong> Upload form with drag-and-drop area.</li>
+    <li><strong>Figure 11.4:</strong> Annotated processed video with the "Available spots: X / Y" banner.</li>
+    <li><strong>Figure 11.5:</strong> Booking modal with vehicle number + duration + payment provider toggle.</li>
+    <li><strong>Figure 11.6:</strong> Stripe-hosted Checkout page with INR amount.</li>
+    <li><strong>Figure 11.7:</strong> Stripe payment status page (polling).</li>
+    <li><strong>Figure 11.8:</strong> Booking confirmation screen with the slot now coloured red.</li>
+    <li><strong>Figure 11.9:</strong> SQLite database (<code>bookings.db</code>) schema viewed in DB Browser for SQLite.</li>
+    <li><strong>Figure 11.10:</strong> Mobile responsive view of the dashboard at 360 px width.</li>
+  </ul>
+</section>
+
+<!-- ============================================================
+     12. BIBLIOGRAPHY
+     ============================================================ -->
+<section class="page">
+  <h1 class="chapter">12. Bibliography</h1>
+
+  <ol>
+    <li>Bradski, G. (2000). <em>The OpenCV Library</em>. Dr. Dobb's Journal of Software Tools.</li>
+    <li>Pedregosa, F. et al. (2011). <em>Scikit-learn: Machine Learning in Python</em>. Journal of Machine Learning Research, 12, 2825–2830.</li>
+    <li>van der Walt, S. et al. (2014). <em>scikit-image: image processing in Python</em>. PeerJ, 2, e453.</li>
+    <li>Grinberg, M. (2018). <em>Flask Web Development: Developing Web Applications with Python</em> (2nd ed.). O'Reilly Media.</li>
+    <li>Stripe Inc. (2024). <em>Stripe API Reference — Checkout Sessions</em>. <a href="https://stripe.com/docs/api/checkout/sessions">stripe.com/docs/api/checkout/sessions</a></li>
+    <li>Stripe Inc. (2024). <em>Webhooks Best Practices</em>. <a href="https://stripe.com/docs/webhooks/best-practices">stripe.com/docs/webhooks/best-practices</a></li>
+    <li>Mozilla Developer Network. <em>MJPEG over HTTP — multipart/x-mixed-replace</em>. <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP">developer.mozilla.org/en-US/docs/Web/HTTP</a></li>
+    <li>SQLite Consortium. (2024). <em>SQLite Documentation — Data Types and Locking</em>. <a href="https://sqlite.org/docs.html">sqlite.org/docs.html</a></li>
+    <li>Howard, A. G. et al. (2017). <em>MobileNets: Efficient Convolutional Neural Networks for Mobile Vision Applications</em>. arXiv:1704.04861.</li>
+    <li>Suzuki, S., &amp; Abe, K. (1985). <em>Topological Structural Analysis of Digitized Binary Images by Border Following</em>. CVGIP, 30(1), 32–46.</li>
+    <li>IEEE Computer Society. (1998). <em>IEEE Recommended Practice for Software Requirements Specifications — IEEE Std 830-1998</em>.</li>
+    <li>Pressman, R. S. (2014). <em>Software Engineering: A Practitioner's Approach</em> (8th ed.). McGraw-Hill.</li>
+    <li>Sommerville, I. (2015). <em>Software Engineering</em> (10th ed.). Pearson.</li>
+    <li>Government of India, Ministry of Housing and Urban Affairs. (2018). <em>Smart Cities Mission — Urban Mobility Guidelines</em>.</li>
+    <li>National Highways Authority of India. (2021). <em>FASTag and Digital Tolling — Lessons for Urban Parking</em>.</li>
+  </ol>
+
+  <p class="center" style="margin-top:36pt;"><em>— End of Report —</em></p>
+</section>
+
+</body>
+</html>
